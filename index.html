@@ -1,0 +1,786 @@
+<!-- /index.html -->
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BC SERVICES | Entretien de Jardins à Mâcon & Crédit d'Impôt</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons + Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#ff8011",
+            secondary: "#568d16",
+            dark: "#0f172a",
+            surface: "#f8fafc",
+          },
+          fontFamily: { sans: ["Outfit", "sans-serif"] },
+        },
+      },
+    };
+  </script>
+
+ <style>
+  /* =========================
+     NAV (DESKTOP)
+  ========================= */
+  .glass-nav {
+    background: linear-gradient(180deg, rgba(11,27,47,.62), rgba(11,27,47,.55));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 2.6rem;
+    box-shadow: 0 10px 35px rgba(11,27,47,.25);
+  }
+
+  /* =========================
+     MOBILE MENU PANEL
+  ========================= */
+  .mobile-glass {
+    background: linear-gradient(180deg, rgba(11,27,47,.78), rgba(11,27,47,.55));
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: 0 30px 60px rgba(2,6,23,.35);
+  }
+
+  /* =========================
+     HERO
+  ========================= */
+  .hero-section {
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.65)),
+      url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .hero-blur-overlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* =========================
+     SAP RIBBON
+  ========================= */
+  .sap-ribbon {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 1.25rem;
+    box-shadow: 0 12px 40px rgba(15,23,42,0.35);
+  }
+
+  /* =========================
+     CARDS / FORM
+  ========================= */
+  .service-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 2rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    transition: .4s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+  }
+
+  .form-glass {
+  background: rgba(15, 23, 42, 0.35); /* ✅ même bleu, plus transparent */
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255,255,255,.08);
+}
+  .input-group { position: relative; margin-bottom: 1rem; }
+  .input-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 42px;
+    color: #94a3b8;
+    pointer-events: none;
+    transition: color .2s;
+  }
+  .input-premium, .select-premium, textarea.input-premium {
+    width: 100%;
+    padding: .9rem 1.25rem .9rem 3rem;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 1rem;
+    color: #fff;
+    font-weight: 300;
+    transition: border-color .2s, background .2s;
+  }
+  .select-premium { appearance: none; cursor: pointer; padding-right: 2.5rem; }
+  .select-premium option { background-color: #0f172a; color: #fff; }
+  .input-premium::placeholder { color: #64748b; }
+  .input-premium:focus, .select-premium:focus, textarea.input-premium:focus {
+    outline: none;
+    border-color: rgba(255,128,17,.5);
+    background: rgba(255,255,255,.08);
+  }
+  .input-premium:focus + .input-icon,
+  .select-premium:focus + .input-icon { color: #ff8011; }
+
+  .btn-shiny { position: relative; overflow: hidden; }
+  .btn-shiny::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,.2), transparent);
+    transform: rotate(45deg);
+    transition: .5s;
+    pointer-events: none;
+  }
+  .btn-shiny:hover::after { left: 100%; top: 100%; }
+
+  /* =========================
+     ✅ MOBILE ONLY
+     - aucune barre nav (plus de blur bandeau)
+     - burger FIXED en haut à gauche (transparent + blur)
+     - supprime le vide en bas (hero-grid)
+  ========================= */
+  @media (max-width: 767.98px) {
+    /* La nav ne doit plus "exister" visuellement */
+    .glass-nav {
+      display: contents !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    /* Cache le petit logo dans la nav (en haut à gauche) */
+    #mainNav > a { display: none !important; }
+
+    /* Header neutre (évite le “vide”/décalage) */
+    header {
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Burger: top-left, visible sur fond clair grâce au blur */
+   #menuBtn {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top) + 12px) !important;
+  left: 12px !important;
+  right: auto !important;
+  z-index: 9999 !important;
+
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 18px !important;
+
+  /* ✅ bleu transparent (visible sur blanc) */
+  background: rgba(11, 27, 47, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+
+  /* ✅ blur glass */
+  backdrop-filter: blur(14px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+
+  /* ✅ ombre + légère “ligne” pour fond blanc */
+  box-shadow:
+    0 14px 34px rgba(2, 6, 23, 0.28),
+    0 0 0 1px rgba(11, 27, 47, 0.25) inset !important;
+}
+
+
+    /* Le panneau menu s'ouvre sous le burger */
+    #mobileMenu {
+      position: fixed !important;
+      top: calc(env(safe-area-inset-top) + 72px) !important;
+      left: 12px !important;
+      right: 12px !important;
+      z-index: 9998 !important;
+      margin-top: 0 !important;
+    }
+
+    /* Hero: pas de fixed BG en mobile + ligne de flottaison propre */
+    .hero-section {
+      background-attachment: scroll;
+      padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
+    }
+
+    /* Supprime la cause du vide: le min-height de la grille mobile */
+    .hero-grid {
+      min-height: auto !important;
+      display: block !important;
+      grid-template-rows: none !important;
+      row-gap: 0 !important;
+      align-items: initial !important;
+      justify-items: initial !important;
+    }
+  }
+   
+   
+   /* ✅ FORM: tout le texte en blanc (labels + inputs + placeholders + icons) */
+.form-glass,
+.form-glass label,
+.form-glass input,
+.form-glass textarea,
+.form-glass select,
+.form-glass option,
+.form-glass p,
+.form-glass span,
+.form-glass small,
+.form-glass i {
+  color: #fff !important;
+}
+
+/* Placeholder plus lisible (blanc un peu transparent) */
+.form-glass input::placeholder,
+.form-glass textarea::placeholder {
+  color: rgba(255,255,255,0.55) !important;
+}
+
+/* Icônes dans les champs (un poil moins fort que le texte) */
+.form-glass .input-icon {
+  color: rgba(255,255,255,0.70) !important;
+}
+
+/* Flèche du select (celle en absolute à droite) */
+.form-glass .fa-chevron-down {
+  color: rgba(255,255,255,0.70) !important;
+}
+
+/* Texte “envoi sécurisé …” en blanc léger */
+.form-glass p.text-white\/40 {
+  color: rgba(255,255,255,0.55) !important;
+}
+   
+   /* ✅ Champs: bordures plus claires + look premium */
+.form-glass .input-premium,
+.form-glass .select-premium,
+.form-glass textarea.input-premium {
+  border-color: rgba(255,255,255,0.22) !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
+/* ✅ Hover léger (premium) */
+.form-glass .input-premium:hover,
+.form-glass .select-premium:hover,
+.form-glass textarea.input-premium:hover {
+  border-color: rgba(255,255,255,0.30) !important;
+  background: rgba(255,255,255,0.10) !important;
+}
+
+/* ✅ Focus orange + glow */
+.form-glass .input-premium:focus,
+.form-glass .select-premium:focus,
+.form-glass textarea.input-premium:focus {
+  border-color: rgba(255,128,17,0.70) !important;
+  box-shadow: 0 0 0 4px rgba(255,128,17,0.18) !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* ✅ Optionnel: icône un peu plus visible au focus */
+.form-glass .input-premium:focus + .input-icon,
+.form-glass .select-premium:focus + .input-icon {
+  color: rgba(255,255,255,0.95) !important;
+}
+
+
+</style>
+
+</head>
+
+
+<body class="bg-white text-dark font-sans overflow-x-hidden antialiased">
+
+  <!-- NAV -->
+  <header class="fixed w-full z-50 px-3 sm:px-4 py-3 sm:py-4">
+    <nav id="mainNav" class="glass-nav px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between max-w-6xl mx-auto">
+      <!-- Logo (plus gros en mobile) -->
+      <a href="#accueil" class="flex items-center gap-3 shrink-0">
+        <img src="https://lh3.googleusercontent.com/d/120Absf4aNwm-S9DMpLdOmWEsNl1Qb2wO"
+             alt="BC SERVICES"
+             class="h-12 md:h-14 lg:h-16 w-auto brightness-0 invert opacity-90"/>
+        <span class="sr-only">BC SERVICES - Accueil</span>
+      </a>
+
+      <!-- Liens desktop -->
+      <ul class="hidden md:flex items-center gap-12 text-[12px] font-extrabold uppercase tracking-[0.18em] text-white mx-auto">
+        <li><a href="#accueil" class="hover:text-primary transition">Accueil</a></li>
+        <li><a href="#propos" class="hover:text-primary transition">Engagement</a></li>
+        <li><a href="#services" class="hover:text-primary transition">Services</a></li>
+      </ul>
+
+      <!-- CTA desktop -->
+      <a href="#contact"
+         class="hidden md:inline-flex bg-primary text-white px-5 lg:px-6 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-wider hover:bg-white hover:text-primary transition shadow-xl shadow-primary/20">
+        Demander un devis gratuit
+      </a>
+
+      <!-- Burger seul en mobile -->
+      <button id="menuBtn"
+              class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-2xl border border-white/25 text-white bg-white/10 backdrop-blur"
+              aria-expanded="false" aria-controls="mobileMenu">
+        <i class="fa-solid fa-bars"></i>
+        <span class="sr-only">Ouvrir le menu</span>
+      </button>
+    </nav>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="md:hidden max-w-6xl mx-auto mt-2 px-3 sm:px-0 hidden">
+      <div class="mobile-glass rounded-3xl px-4 py-3 text-white">
+        <div class="flex flex-col divide-y divide-white/10">
+          <a href="#accueil" class="py-4 text-base">Accueil</a>
+          <a href="#propos" class="py-4 text-base">Engagement</a>
+          <a href="#services" class="py-4 text-base">Services</a>
+          <a href="tel:0785714786" class="py-4 font-semibold text-primary">07 85 71 47 86</a>
+          <div class="pt-4">
+            <a href="#contact"
+               class="inline-flex w-full justify-center bg-primary text-white px-5 py-3 rounded-2xl text-[12px] font-black uppercase tracking-wider">
+              Demander un devis gratuit
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="accueil" class="hero-section relative px-4 sm:px-6 pt-10 sm:pt-10">
+    <div class="absolute inset-0 hero-blur-overlay pointer-events-none"></div>
+
+    <!-- Mobile: grille 2 blocs (logo + texte), Desktop: centré normal -->
+    <div class="container mx-auto relative z-10 hero-grid md:min-h-[88vh] md:flex md:items-center">
+      <div class="max-w-5xl mx-auto w-full text-center">
+        <!-- Bloc 1 : LOGO (gros en mobile) -->
+        <div class="mb-5 md:mb-10">
+          <img src="https://lh3.googleusercontent.com/d/120Absf4aNwm-S9DMpLdOmWEsNl1Qb2wO"
+               alt="BC SERVICES - Expert Paysagiste Mâcon"
+               class="h-52 md:h-48 lg:h-56 w-auto mx-auto drop-shadow-2xl brightness-0 invert opacity-100"
+
+class/>
+        </div>
+
+        <!-- Bloc 2 : TEXTE -->
+        <div class="px-1">
+          <h1 class="text-[30px] sm:text-5xl md:text-7xl font-semibold text-white mb-4 md:mb-8 leading-[1.15] md:leading-[1.12] tracking-tight drop-shadow-lg">
+            Entretien extérieur à <span class="text-primary italic">Mâcon et ses alentours.</span>
+          </h1>
+
+          <div class="text-base sm:text-lg md:text-xl text-white mb-7 md:mb-8 max-w-3xl md:max-w-4xl mx-auto font-light leading-relaxed space-y-3 drop-shadow-md">
+            <p>BC SERVICES : Qualité, Réactivité et Confiance pour vos espaces verts.</p>
+            <p class="font-medium text-white/90 italic">
+              Profitez de <span class="text-primary font-bold">50 % de crédit d’impôt immédiat</span>.
+            </p>
+          </div>
+
+          <a href="#contact" class="inline-flex bg-primary text-white px-7 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg hover:scale-105 transition shadow-xl shadow-primary/30">
+            Demander un devis gratuit
+          </a>
+
+          <!-- === SAP Ribbon (Desktop & Mobile) === -->
+          <div class="mt-6 sm:mt-8 flex justify-center">
+           <div class="sap-ribbon w-fit md:w-fit px-3 md:px-5 py-3 md:py-4 flex items-center gap-3 md:gap-5">
+
+
+              <img
+                src="https://s3-eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/101224350404/original/v--zcZgYwlxs4SrP0ojETiSTxWKj-pb6mQ.png?1740071181"
+                alt="Services à la Personne"
+                class="h-9 sm:h-11 w-auto brightness-110 drop-shadow" />
+              <div class="hidden sm:block h-8 w-px bg-white/25"></div>
+              <div class="text-white/95 flex flex-col items-center text-center">
+  <p class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-primary mb-0.5">
+    Agrément SAP Officiel
+  </p>
+  <p class="text-[13px] sm:text-lg md:text-xl font-semibold italic">
+    50% de réduction fiscale immédiate
+  </p>
+</div>
+
+            </div>
+          </div>
+          <!-- === /SAP Ribbon === -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENT -->
+  <section id="propos" class="py-20 md:py-28 lg:py-32 bg-white border-b border-slate-50">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-5xl md:text-6xl font-bold text-dark tracking-tight mb-6 md:mb-8">
+          L'excellence <span class="text-primary">BC SERVICES</span>
+        </h2>
+        <p class="text-slate-500 text-base sm:text-lg md:text-xl font-light max-w-3xl mx-auto leading-relaxed mb-16 md:mb-24">
+          Un service de proximité basé sur l'expertise pour la valorisation de votre patrimoine extérieur sur un <strong>rayon de 30km autour de Mâcon</strong>.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start mb-16 md:mb-24 text-left">
+          <div class="space-y-8 md:space-y-12">
+            <div>
+              <h3 class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 md:mb-8 flex items-center gap-4">
+                <span class="w-8 h-px bg-slate-200"></span> Zone & Public
+              </h3>
+              <div class="space-y-5 md:space-y-6">
+                <div class="group flex items-center gap-5 md:gap-6">
+                  <span class="text-3xl md:text-4xl font-black text-slate-100 group-hover:text-primary/20 transition-colors">30</span>
+                  <div>
+                    <p class="text-lg md:text-xl font-bold text-dark italic">Rayon d'action</p>
+                    <p class="text-slate-500 text-xs md:text-sm font-light uppercase tracking-widest">Kilomètres autour de Mâcon</p>
+                  </div>
+                </div>
+                <div class="group flex items-center gap-5 md:gap-6">
+                  <span class="text-3xl md:text-4xl font-black text-slate-100 group-hover:text-primary/20 transition-colors">01</span>
+                  <div>
+                    <p class="text-lg md:text-xl font-bold text-dark">Particuliers & Pros</p>
+                    <p class="text-slate-500 text-xs md:text-sm font-light">Entretien régulier ou ponctuel adapté.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-6 md:p-10 rounded-[2.5rem] border border-slate-100">
+              <h3 class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-3 md:mb-4">Notre Vision</h3>
+              <p class="text-slate-600 font-light leading-relaxed">
+                Qualité, Réactivité et Confiance. Nous garantissons un résultat irréprochable au juste prix.
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-8 md:space-y-12">
+            <div>
+              <h3 class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 md:mb-8 flex items-center gap-4">
+                <span class="w-8 h-px bg-slate-200"></span> Délais & Réactivité
+              </h3>
+              <div class="space-y-4">
+                <div class="p-5 md:p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                  <p class="text-[9px] md:text-[10px] font-black uppercase text-primary tracking-widest mb-1">Standard</p>
+                  <p class="text-lg md:text-xl font-bold text-dark">Petits chantiers : <span class="font-light text-slate-500">Sous 7 jours</span></p>
+                </div>
+                <div class="p-5 md:p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                  <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Ampleur</p>
+                  <p class="text-lg md:text-xl font-bold text-dark">Grands projets : <span class="font-light text-slate-500">Sous 30 jours</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-dark/60 p-8 md:p-10 rounded-[2.5rem] shadow-xl text-white relative overflow-hidden">
+              <h3 class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-primary mb-3 md:mb-4">Engagement Devis</h3>
+              <p class="text-white/80 font-light leading-relaxed mb-6 md:mb-8 italic">Étude personnalisée et chiffrée gratuite.</p>
+              <a href="#contact" class="inline-flex items-center gap-2 text-white font-bold text-sm border-b-2 border-primary pb-1 hover:text-primary transition-colors">
+                Demander un devis <i class="fas fa-chevron-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 md:gap-5">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white text-[11px] md:text-xs font-black uppercase tracking-widest shadow-md"><i class="fas fa-file-invoice-dollar"></i> Devis gratuit</div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white text-[11px] md:text-xs font-black uppercase tracking-widest shadow-md"><i class="fas fa-tags"></i> Prix attractif</div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white text-[11px] md:text-xs font-black uppercase tracking-widest shadow-md"><i class="fas fa-bolt"></i> Intervention rapide</div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white text-[11px] md:text-xs font-black uppercase tracking-widest shadow-md"><i class="fas fa-check-circle"></i> Qualité garantie</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 md:py-28 bg-surface">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14 md:mb-20 max-w-3xl mx-auto">
+        <p class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-3 md:mb-4">Expertise extérieure</p>
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-4 md:mb-6 tracking-tight">Services proposés</h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full mb-6 md:mb-8"></div>
+        <p class="text-slate-500 font-light italic text-base md:text-lg">Tout pour votre jardin et vos extérieurs.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-calendar-check"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Entretien mensuel ou annuel</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6 italic">Contrats personnalisés pour un jardin impeccable toute l'année.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Sérénité</div>
+        </div>
+
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-leaf"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Entretien espaces verts</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6">Tonte, taille, élagage. <span class="text-secondary font-bold">50% crédit d'impôt immédiat</span>.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Éligible SAP</div>
+        </div>
+
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-500 text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-water"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Nettoyage extérieur</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6">Haute pression pour vos toitures, façades et terrasses.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Performance</div>
+        </div>
+
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-700 text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-shield-alt"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Pose & Réparation clôtures</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6 italic">Panneaux rigides, bois, grillages.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Sécurité</div>
+        </div>
+
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-hammer"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Petite maçonnerie</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6 italic">Murets, bordures, piliers et dalles.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Structure</div>
+        </div>
+
+        <div class="service-card">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-xl md:text-2xl mb-6 md:mb-8"><i class="fas fa-mountain"></i></div>
+          <h3 class="text-lg md:text-xl font-bold text-dark mb-3 md:mb-4 leading-tight">Aménagement paysager</h3>
+          <p class="text-slate-500 font-light text-sm leading-relaxed mb-4 md:mb-6">Création de massifs et conception globale.</p>
+          <div class="mt-auto text-[10px] font-black uppercase tracking-wider text-slate-400">Esthétique</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 md:py-28 bg-white">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-center">
+        <!-- Infos -->
+        <div class="lg:pr-6">
+          <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-3 block">Contact direct</span>
+          <h2 class="text-3xl sm:text-5xl md:text-6xl font-bold text-dark mb-6 md:mb-8 tracking-tight italic leading-tight">
+            Un projet ? <br /><span class="text-primary">Parlons-en.</span>
+          </h2>
+          <p class="text-slate-500 text-base sm:text-lg font-light mb-8 md:mb-12 italic leading-relaxed">
+            BC SERVICES intervient sur un <strong>rayon de 30 km autour de Mâcon</strong>. Réponse garantie sous 48h.
+          </p>
+
+          <div class="space-y-4 md:space-y-6">
+            <div class="flex items-center gap-4 md:gap-6 p-4 md:p-5 rounded-2xl md:rounded-[2rem] bg-slate-50/50 border border-slate-100">
+              <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-primary text-white flex items-center justify-center text-lg md:text-xl shadow-lg shadow-primary/20">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div>
+                <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Appel direct</p>
+                <a href="tel:0785714786" class="text-lg md:text-xl font-bold text-dark hover:text-primary transition">07 85 71 47 86</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 md:gap-6 p-4 md:p-5 rounded-2xl md:rounded-[2rem] bg-slate-50/50 border border-slate-100">
+              <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-dark text-white flex items-center justify-center text-lg md:text-xl">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div>
+                <p class="text-[9px] md:text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Email</p>
+                <a href="mailto:celianbaptista@gmail.com" class="text-lg md:text-xl font-bold text-dark hover:text-primary transition">celianbaptista@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulaire utilisable -->
+        <div class="form-glass p-8 sm:p-10 md:p-12 lg:p-14 rounded-3xl md:rounded-[3.5rem] shadow-2xl relative">
+          <!-- Toast -->
+          <div id="formToast" class="hidden mb-4 rounded-xl px-4 py-3 text-sm" role="alert" aria-live="polite"></div>
+
+          <form id="contactForm"
+                action="https://formspree.io/f/mqekvepe"
+                method="POST"
+                class="space-y-4"
+                novalidate>
+            <input type="hidden" name="_subject" value="Demande depuis le site BC SERVICES" />
+            <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              <div class="input-group">
+                <label for="nom" class="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block px-2">Identité</label>
+                <input id="nom" name="nom" type="text" placeholder="Votre nom" required autocomplete="name" class="input-premium" />
+                <i class="fas fa-user input-icon"></i>
+              </div>
+              <div class="input-group">
+                <label for="tel" class="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block px-2">Téléphone</label>
+                <input id="tel" name="tel" type="tel" placeholder="06 00 00 00 00" required inputmode="tel" pattern="^0[1-9](?:[ .-]?\d{2}){4}$" autocomplete="tel" class="input-premium" />
+                <i class="fas fa-phone input-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block px-2">Adresse Email</label>
+              <input id="email" name="_replyto" type="email" placeholder="votre@adresse.com" required autocomplete="email" class="input-premium" />
+              <i class="fas fa-at input-icon"></i>
+            </div>
+
+            <div class="input-group">
+              <label for="type" class="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block px-2">Type de demande</label>
+              <select id="type" name="type_prestation" required class="select-premium">
+                <option value="" disabled selected>Choisir une activité...</option>
+                <option value="Entretien annuel">Entretien annuel (Contrat)</option>
+                <option value="Espaces verts SAP">Taille & Tonte (50% Crédit Impôt)</option>
+                <option value="Nettoyage extérieur">Nettoyage (Toiture, Terrasse...)</option>
+                <option value="Clôtures">Pose de Clôtures</option>
+                <option value="Maçonnerie">Petite Maçonnerie</option>
+                <option value="Aménagement">Aménagement Paysager</option>
+              </select>
+              <i class="fas fa-tasks input-icon"></i>
+              <div class="absolute right-5 top-[42px] pointer-events-none text-slate-500">
+                <i class="fas fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2 block px-2">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Détails de votre projet..." required class="input-premium pl-5 pt-4 resize-y min-h-[120px]"></textarea>
+            </div>
+
+            <button id="submitBtn" type="submit"
+                    class="btn-shiny w-full bg-primary text-white py-5 md:py-6 rounded-2xl font-black text-xs md:text-sm uppercase tracking-[0.35em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-95 transition-all mt-2 inline-flex items-center justify-center gap-3">
+              <span>Envoyer ma demande</span>
+              <span id="btnSpinner" class="hidden w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+            </button>
+
+            <p class="text-center text-[10px] text-white/40 mt-4 md:mt-6 font-medium uppercase tracking-[0.3em] flex items-center justify-center gap-2">
+              <i class="fas fa-lock text-[8px]"></i> Envoi sécurisé via Formspree
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-surface py-16 md:py-20 border-t border-slate-100 text-center px-4">
+    <img src="https://lh3.googleusercontent.com/d/120Absf4aNwm-S9DMpLdOmWEsNl1Qb2wO" alt="BC SERVICES" class="h-16 md:h-28 mx-auto mb-6 md:mb-8 opacity-20 grayscale"/>
+    <div class="space-y-3 md:space-y-4">
+      <p class="text-[9px] md:text-[10px] text-slate-400 font-bold tracking-[0.4em] uppercase">Mâcon • Sancé • Charnay • Azé • Cluny</p>
+      <p class="text-[9px] md:text-[10px] text-slate-400 font-medium tracking-widest uppercase italic">Qualité • Confiance • Rayon 30 km</p>
+      <p class="text-[8px] md:text-[9px] text-slate-300 mt-6">© 2025 BC SERVICES • CELIAN BAPTISTA • SIREN EN COURS</p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Nav on scroll : desktop only
+    const nav = document.getElementById("mainNav");
+    function updateNav() {
+      if (window.innerWidth >= 768) {
+        if (window.scrollY > 50) {
+          nav.style.background = "linear-gradient(180deg, rgba(11,27,47,.88), rgba(11,27,47,.72))";
+          nav.classList.add("shadow-2xl");
+        } else {
+          nav.style.background = "linear-gradient(180deg, rgba(11,27,47,.62), rgba(11,27,47,.55))";
+          nav.classList.remove("shadow-2xl");
+        }
+      } else {
+        nav.style.background = "transparent";
+        nav.classList.remove("shadow-2xl");
+      }
+    }
+    updateNav();
+    window.addEventListener("scroll", updateNav, { passive: true });
+    window.addEventListener("resize", updateNav);
+
+    // Menu mobile
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("hidden") === false;
+      menuBtn.setAttribute("aria-expanded", String(open));
+      menuBtn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+    });
+    mobileMenu.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        mobileMenu.classList.add("hidden");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }
+    });
+
+    // Formulaire: validation + AJAX Formspree
+    const form = document.getElementById("contactForm");
+    const toast = document.getElementById("formToast");
+    const submitBtn = document.getElementById("submitBtn");
+    const spinner = document.getElementById("btnSpinner");
+
+    function showToast(type, msg) {
+      toast.className = "";
+      toast.classList.add("mb-4", "rounded-xl", "px-4", "py-3", "text-sm");
+      if (type === "success") {
+        toast.classList.add("bg-emerald-500/15", "text-emerald-700", "border", "border-emerald-500/30");
+      } else {
+        toast.classList.add("bg-rose-500/15", "text-rose-700", "border", "border-rose-500/30");
+      }
+      toast.textContent = msg;
+    }
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      spinner.classList.toggle("hidden", !loading);
+      submitBtn.classList.toggle("opacity-70", loading);
+    }
+    function validTelFR(value) {
+      return /^0[1-9](?:[ .-]?\d{2}){4}$/.test(value.trim());
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nom = form.elements["nom"].value.trim();
+      const tel = form.elements["tel"].value.trim();
+      const email = form.elements["_replyto"].value.trim();
+      const type = form.elements["type_prestation"].value;
+      const message = form.elements["message"].value.trim();
+
+      if (!nom || !email || !type || !message || !validTelFR(tel)) {
+        showToast("error", "Merci de compléter correctement tous les champs (téléphone FR valide).");
+        return;
+      }
+
+      const action = form.getAttribute("action");
+      if (action.includes("YOUR_FORM_ID")) {
+        showToast("error", "Remplace YOUR_FORM_ID par ton identifiant Formspree pour activer l’envoi.");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const formData = new FormData(form);
+        const res = await fetch(action, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: formData,
+        });
+
+        if (res.ok) {
+          form.reset();
+          showToast("success", "Merci ! Votre demande a bien été envoyée. Nous revenons vers vous sous 48h.");
+        } else {
+          const data = await res.json().catch(() => ({}));
+          const msg = data?.errors?.[0]?.message || "Impossible d’envoyer le message. Réessayez plus tard.";
+          showToast("error", msg);
+        }
+      } catch {
+        showToast("error", "Réseau indisponible. Vérifiez votre connexion et réessayez.");
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
